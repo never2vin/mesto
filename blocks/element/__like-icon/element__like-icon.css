@@ -1,0 +1,12 @@
+.element__like-icon {
+  width: 22px;
+  height: 19px;
+  border: none;
+  background: url(../../../images/element-heart.svg) no-repeat center;
+  opacity: 1;
+  transition: opacity 0.5s;
+}
+
+.element__like-icon:hover {
+  opacity: .5;
+}
