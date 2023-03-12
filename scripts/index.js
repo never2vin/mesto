@@ -19,11 +19,11 @@ const openPopup = function () {
   formNameInputElement.value = nameString;
   formJobInputElement.value = jobString;
 
-  popupElement.classList.add('popup-opened');
+  popupElement.classList.add('popup_opened');
 }
 
 const closePopup = function () {
-  popupElement.classList.remove('popup-opened');
+  popupElement.classList.remove('popup_opened');
 }
 
 const closePopupByClickOverlay = function (event) {
