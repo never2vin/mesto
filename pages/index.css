@@ -6,14 +6,11 @@
 @import url(../blocks/page/__button/page__button.css);
 @import url(../blocks/page/__input/page__input.css);
 @import url(../blocks/page/__list/page__list.css);
-@import url(../blocks/page/__section/page__section.css);
 
 @import url(../blocks/page/__header/page__header.css);
 
 @import url(../blocks/header/header.css);
 @import url(../blocks/header/__logo/header__logo.css);
-@import url(../blocks/header/__line/header__line.css);
-
 
 @import url(../blocks/page/__content/page__content.css);
 
@@ -39,7 +36,6 @@
 
 @import url(../blocks/page/__footer/page__footer.css);
 
-@import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);
 
 @import url(../blocks/popup/popup.css);
@@ -48,6 +44,4 @@
 @import url(../blocks/popup/__close/popup__close.css);
 @import url(../blocks/popup/__heading/popup__heading.css);
 @import url(../blocks/popup/__input/popup__input.css);
-@import url(../blocks/popup/__input/_type/popup__input_type_name.css);
-@import url(../blocks/popup/__input/_type/popup__input_type_job.css);
 @import url(../blocks/popup/__submit/popup__submit.css);
