@@ -1,5 +1,3 @@
-console.log('Hello World!');
-
 const profileElement = document.querySelector('.profile');
 const profileEditButtonElement = profileElement.querySelector('.profile__edit-button');
 const profileNameElement = profileElement.querySelector('.profile__name');
