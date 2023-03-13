@@ -9,8 +9,8 @@ const popupElement = document.querySelector('.popup');
 const popupCloseButtonElement = popupElement.querySelector('.popup__close');
 
 const formElement = popupElement.querySelector('.popup__form');
-const formNameInputElement = formElement.querySelector('.popup__input_type_name');
-const formJobInputElement = formElement.querySelector('.popup__input_type_job');
+const formNameInputElement = formElement.querySelector('input[name="name"]');
+const formJobInputElement = formElement.querySelector('input[name="about"]');
 
 const openPopup = function () {
   const nameString = profileNameElement.innerText;

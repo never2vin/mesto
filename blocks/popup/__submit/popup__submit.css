@@ -8,6 +8,7 @@
   border: none;
   opacity: 1;
   transition: opacity 0.5s;
+  margin-top: 27px;
 }
 
 .popup__submit:hover {
@@ -20,6 +21,7 @@
     width: 238px;
     height: 46px;
     font-size: 14px;
-    line-height: 27px;
+    line-height: 17px;
+    margin-top: 24px;
   }
 }
