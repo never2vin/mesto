@@ -1,92 +1,78 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Место</title>
-  <link rel="stylesheet" href="./pages/index.css">
-</head>
-<body class="page">
-  <header class="header page__header">
-    <img src="./images/header-logo.svg" alt="Логотип" class="header__logo">
-  </header>
-  <main class="content page__content">
-    <section class="profile content__profile">
-      <img
-        src="./images/profile-cousteau.png"
-        alt="Фото профиля"
-        class="profile__image"
-      >
-      <div class="profile__info">
-        <h1 class="profile__name">Жак-Ив Кусто</h1>
-        <p class="profile__job">
-          Исследователь океана
-        </p>
-        <button type="button" class="page__button profile__edit-button" aria-label="Редактировать профиль"></button>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Место</title>
+    <link rel="stylesheet" href="./pages/index.css">
+  </head>
+
+  <body class="page">
+    <header class="header page__header">
+      <img src="./images/header-logo.svg" alt="Логотип" class="header__logo">
+    </header>
+
+    <main class="content page__content">
+      <section class="profile content__profile">
+        <img
+          src="./images/profile-cousteau.png"
+          alt="Фото профиля"
+          class="profile__image"
+        >
+        <div class="profile__info">
+          <h1 class="profile__name">Жак-Ив Кусто</h1>
+          <p class="profile__job">Исследователь океана</p>
+          <button
+            type="button"
+            class="page__button profile__edit-button"
+            aria-label="Редактировать профиль"
+          ></button>
+        </div>
+        <button
+          type="button"
+          class="page__button profile__add-button"
+          aria-label="Добавить"
+        ></button>
+      </section>
+      <section aria-label="Карточки красивых мест">
+        <ul class="elements page__list"></ul>
+      </section>
+    </main>
+
+    <div class="popup">
+      <div class="popup__container">
+        <button type="button" class="page__button popup__close" aria-label="Закрыть"></button>
+        <form class="popup__form" name="profile-form">
+          <h2 class="popup__heading">Редактировать профиль</h2>
+          <input type="text" class="page__input popup__input popup__input_type_name" name="name" placeholder="Имя">
+          <input type="text" class="page__input popup__input popup__input_type_job" name="about" placeholder="О себе">
+          <button type="submit" class="page__button popup__submit">Сохранить</button>
+        </form>
       </div>
-      <button type="button" class="page__button profile__add-button" aria-label="Добавить"></button>
-    </section>
-    <section aria-label="Карточки красивых мест">
-      <ul class="elements page__list">
-        <li class="element">
-          <img src="./images/element-karachaevsk.png" alt="Карачаевск" class="element__image">
-          <div class="element__description">
-            <h2 class="element__title">Карачаевск</h2>
-            <button type="button" class="page__button element__like-icon"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img src="./images/element-elbrus.png" alt="Эльбрус" class="element__image">
-          <div class="element__description">
-            <h2 class="element__title">Гора Эльбрус</h2>
-            <button type="button" class="page__button element__like-icon"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img src="./images/element-dombai.png" alt="Домбай" class="element__image">
-          <div class="element__description">
-            <h2 class="element__title">Домбай</h2>
-            <button type="button" class="page__button element__like-icon"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img src="./images/element-elbrus.png" alt="Эльбрус" class="element__image">
-          <div class="element__description">
-            <h2 class="element__title">Гора Эльбрус</h2>
-            <button type="button" class="page__button element__like-icon"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img src="./images/element-dombai.png" alt="Домбай" class="element__image">
-          <div class="element__description">
-            <h2 class="element__title">Домбай</h2>
-            <button type="button" class="page__button element__like-icon"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img src="./images/element-karachaevsk.png" alt="Карачаево-Черкессия" class="element__image">
-          <div class="element__description">
-            <h2 class="element__title">Карачаево-Черкессия</h2>
-            <button type="button" class="page__button element__like-icon"></button>
-          </div>
-        </li>
-      </ul>
-    </section>
-  </main>
-  <div class="popup">
-    <div class="popup__container">
-      <button type="button" class="page__button popup__close" aria-label="Закрыть"></button>
-      <form class="popup__form" name="profile-form">
-        <h2 class="popup__heading">Редактировать профиль</h2>
-        <input type="text" class="page__input popup__input popup__input_type_name" name="name" placeholder="Имя">
-        <input type="text" class="page__input popup__input popup__input_type_job" name="about" placeholder="О себе">
-        <button type="submit" class="page__button popup__submit">Сохранить</button>
-      </form>
     </div>
-  </div>
-  <footer class="footer page__footer">
-    <p class="footer__copyright">© 2023 Mesto Russia</p>
-  </footer>
-  <script src="./scripts/index.js"></script>
-</body>
+
+    <footer class="footer page__footer">
+      <p class="footer__copyright">© 2023 Mesto Russia</p>
+    </footer>
+
+    <template id="element-template">
+      <li class="element">
+        <img
+          src=""
+          alt=""
+          class="element__image"
+        >
+        <div class="element__description">
+          <h2 class="element__title"></h2>
+          <button
+            type="button"
+            class="page__button element__like-icon"
+            aria-label="Лайкнуть"
+          ></button>
+        </div>
+      </li>
+    </template>
+
+    <script src="./scripts/index.js"></script>
+  </body>
 </html>
