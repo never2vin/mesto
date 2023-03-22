@@ -25,47 +25,88 @@ const initialCards = [
   }
 ];
 
-const elementTemplate = document.getElementById('element-template').content;
-const elementsList = document.querySelector('.elements');
+const listElements = document.querySelector('.elements');
+const templateElement = document.getElementById('element-template').content;
 
 initialCards.forEach(renderElement);
 
-function renderElement (item) {
-  const htmlElement = elementTemplate.cloneNode(true);
+function renderElement (item, append = true) {
+  const htmlElement = templateElement.cloneNode(true);
 
-  const elementImage = htmlElement.querySelector('.element__image');
-  elementImage.src = item.link;
-  elementImage.alt = item.name;
+  const imageElement = htmlElement.querySelector('.element__image');
+  imageElement.src = item.link;
+  imageElement.alt = item.name;
 
   htmlElement.querySelector('.element__title').textContent = item.name;
 
-  elementsList.append(htmlElement);
+  if (append) {
+    listElements.append(htmlElement);
+  } else {
+    listElements.prepend(htmlElement);
+  }
 }
 
 const profileElement = document.querySelector('.profile');
 const profileEditButtonElement = profileElement.querySelector('.profile__edit-button');
+const profileAddButtonElement = profileElement.querySelector('.profile__add-button');
 const profileNameElement = profileElement.querySelector('.profile__name');
 const profileJobElement = profileElement.querySelector('.profile__job');
 
-const popupElement = document.querySelector('.popup');
-const popupCloseButtonElement = popupElement.querySelector('.popup__close');
+let currentPopupElement = null;
+let currentFormElement = null;
 
-const formElement = popupElement.querySelector('.popup__form');
-const formNameInputElement = formElement.querySelector('.popup__input_type_name');
-const formJobInputElement = formElement.querySelector('.popup__input_type_job');
+const openPopup = function (popupId) {
+  currentPopupElement = document.getElementById(popupId);
+  currentFormElement = currentPopupElement.querySelector('.popup__form');
 
-const openPopup = function () {
-  const nameString = profileNameElement.innerText;
-  const jobString = profileJobElement.innerText;
+  if (popupId === 'popup-edit') {
+    currentFormElement.name.value = profileNameElement.innerText;
+    currentFormElement.about.value = profileJobElement.innerText;
+  }
 
-  formNameInputElement.value = nameString;
-  formJobInputElement.value = jobString;
+  currentFormElement.addEventListener('submit', handleFormSubmit);
 
-  popupElement.classList.add('popup_opened');
+  currentPopupElement.querySelector('.popup__close').addEventListener('click', closePopup);
+  currentPopupElement.addEventListener('click', closePopupByClickOverlay);
+
+  currentPopupElement.classList.add('popup_opened');
+}
+
+function handleFormSubmit (event) {
+  event.preventDefault();
+
+  switch (currentFormElement.attributes.name.value) {
+    case 'edit-profile':
+      profileNameElement.textContent = currentFormElement.name.value;
+      profileJobElement.textContent = currentFormElement.about.value;
+      break;
+    case 'add-card':
+      renderElement({
+        name: currentFormElement.name.value,
+        link: currentFormElement.link.value
+      }, false);
+      currentFormElement.reset();
+      break;
+  }
+
+  // if (formElement.attributes.name.value === 'edit-profile') {
+  //   profileNameElement.textContent = currentFormElement.name.value;
+  //   profileJobElement.textContent = currentFormElement.about.value;
+  // } else if (formElement.attributes.name.value === 'add-card') {
+  //   const card = {
+  //     name: currentFormElement.name.value,
+  //     link: currentFormElement.link.value
+  //   }
+
+  //   renderElements(card, false);
+  // }
+
+  currentFormElement.removeEventListener('submit', handleFormSubmit);
+  closePopup();
 }
 
 const closePopup = function () {
-  popupElement.classList.remove('popup_opened');
+  currentPopupElement.classList.remove('popup_opened');
 }
 
 const closePopupByClickOverlay = function (event) {
@@ -75,19 +116,5 @@ const closePopupByClickOverlay = function (event) {
   closePopup();
 }
 
-function handleFormSubmit (event) {
-  event.preventDefault();
-
-  const nameString = formNameInputElement.value;
-  const jobString = formJobInputElement.value;
-
-  profileNameElement.textContent = nameString;
-  profileJobElement.textContent = jobString;
-
-  closePopup();
-}
-
-profileEditButtonElement.addEventListener('click', openPopup);
-popupCloseButtonElement.addEventListener('click', closePopup);
-popupElement.addEventListener('click', closePopupByClickOverlay);
-formElement.addEventListener('submit', handleFormSubmit);
+profileEditButtonElement.addEventListener('click', () => openPopup('popup-edit'));
+profileAddButtonElement.addEventListener('click', () => openPopup('popup-add'));
