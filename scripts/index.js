@@ -37,6 +37,8 @@ function renderElement (item, append = true) {
   imageElement.src = item.link;
   imageElement.alt = item.name;
 
+  htmlElement.querySelector('.element__like-icon').addEventListener('click', toggleLikeIconActivity);
+
   htmlElement.querySelector('.element__title').textContent = item.name;
 
   if (append) {
@@ -44,6 +46,10 @@ function renderElement (item, append = true) {
   } else {
     listElements.prepend(htmlElement);
   }
+}
+
+function toggleLikeIconActivity (event) {
+  event.target.classList.toggle('element__like-icon_active');
 }
 
 const profileElement = document.querySelector('.profile');
