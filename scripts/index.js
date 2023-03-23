@@ -37,6 +37,7 @@ function renderElement (item, append = true) {
   imageElement.src = item.link;
   imageElement.alt = item.name;
 
+  htmlElement.querySelector('.element__trash-icon').addEventListener('click', removeCardElement);
   htmlElement.querySelector('.element__like-icon').addEventListener('click', toggleLikeIconActivity);
 
   htmlElement.querySelector('.element__title').textContent = item.name;
@@ -46,6 +47,10 @@ function renderElement (item, append = true) {
   } else {
     listElements.prepend(htmlElement);
   }
+}
+
+function removeCardElement (event) {
+  event.target.closest('.element').remove();
 }
 
 function toggleLikeIconActivity (event) {
