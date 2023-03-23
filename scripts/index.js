@@ -37,6 +37,8 @@ function renderElement (item, append = true) {
   imageElement.src = item.link;
   imageElement.alt = item.name;
 
+  imageElement.addEventListener('click', openPopupImage);
+
   htmlElement.querySelector('.element__trash-icon').addEventListener('click', removeCardElement);
   htmlElement.querySelector('.element__like-icon').addEventListener('click', toggleLikeIconActivity);
 
@@ -55,6 +57,21 @@ function removeCardElement (event) {
 
 function toggleLikeIconActivity (event) {
   event.target.classList.toggle('element__like-icon_active');
+}
+
+function openPopupImage (event) {
+  currentPopupElement = document.querySelector('.popup_type_image');
+
+  const imageElement = currentPopupElement.querySelector('.popup__image');
+  imageElement.src = event.target.src;
+  imageElement.alt = event.target.alt;
+
+  currentPopupElement.querySelector('.popup__caption').textContent = event.target.alt;
+
+  currentPopupElement.querySelector('.popup__close').addEventListener('click', closePopup);
+  currentPopupElement.addEventListener('click', closePopupByClickOverlay);
+
+  currentPopupElement.classList.add('popup_opened');
 }
 
 const profileElement = document.querySelector('.profile');
@@ -99,18 +116,6 @@ function handleFormSubmit (event) {
       currentFormElement.reset();
       break;
   }
-
-  // if (formElement.attributes.name.value === 'edit-profile') {
-  //   profileNameElement.textContent = currentFormElement.name.value;
-  //   profileJobElement.textContent = currentFormElement.about.value;
-  // } else if (formElement.attributes.name.value === 'add-card') {
-  //   const card = {
-  //     name: currentFormElement.name.value,
-  //     link: currentFormElement.link.value
-  //   }
-
-  //   renderElements(card, false);
-  // }
 
   currentFormElement.removeEventListener('submit', handleFormSubmit);
   closePopup();
