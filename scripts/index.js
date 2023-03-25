@@ -1,3 +1,9 @@
+const config = {
+  'profile__edit-button': '.popup_type_edit',
+  'profile__add-button': '.popup_type_add',
+  'element__image': '.popup_type_image'
+}
+
 const initialCards = [
   {
     name: 'Архыз',
@@ -37,7 +43,7 @@ function renderElement (item, append = true) {
   imageElement.src = item.link;
   imageElement.alt = item.name;
 
-  imageElement.addEventListener('click', openPopupImage);
+  imageElement.addEventListener('click', openPopup);
 
   htmlElement.querySelector('.element__trash-icon').addEventListener('click', removeCardElement);
   htmlElement.querySelector('.element__like-icon').addEventListener('click', toggleLikeIconActivity);
@@ -59,21 +65,6 @@ function toggleLikeIconActivity (event) {
   event.target.classList.toggle('element__like-icon_active');
 }
 
-function openPopupImage (event) {
-  currentPopupElement = document.querySelector('.popup_type_image');
-
-  const imageElement = currentPopupElement.querySelector('.popup__image');
-  imageElement.src = event.target.src;
-  imageElement.alt = event.target.alt;
-
-  currentPopupElement.querySelector('.popup__caption').textContent = event.target.alt;
-
-  currentPopupElement.querySelector('.popup__close-icon').addEventListener('click', closePopup);
-  currentPopupElement.addEventListener('click', closePopupByClickOverlay);
-
-  currentPopupElement.classList.add('popup_faded-in');
-}
-
 const profileElement = document.querySelector('.profile');
 const profileEditButtonElement = profileElement.querySelector('.profile__edit-button');
 const profileAddButtonElement = profileElement.querySelector('.profile__add-button');
@@ -83,19 +74,37 @@ const profileJobElement = profileElement.querySelector('.profile__job');
 let currentPopupElement = null;
 let currentFormElement = null;
 
-const openPopup = function (popupId) {
-  currentPopupElement = document.getElementById(popupId);
-  currentFormElement = currentPopupElement.querySelector('.popup__form');
+function openPopup (event) {
+  const target = event.target;
+  let selector = null;
 
-  if (popupId === 'popup-edit') {
-    currentFormElement.name.value = profileNameElement.innerText;
-    currentFormElement.about.value = profileJobElement.innerText;
+  for (const value of target.classList.values()) {
+    if (Boolean(value in config)) {
+      selector = config[value];
+    }
   }
 
-  currentFormElement.addEventListener('submit', handleFormSubmit);
+  currentPopupElement = document.querySelector(selector);
 
-  currentPopupElement.querySelector('.popup__close-icon').addEventListener('click', closePopup);
-  currentPopupElement.addEventListener('click', closePopupByClickOverlay);
+  if (selector === '.popup_type_image') {
+    const imageElement = currentPopupElement.querySelector('.popup__image');
+    imageElement.src = target.src;
+    imageElement.alt = target.alt;
+
+    currentPopupElement.querySelector('.popup__caption').textContent = target.alt;
+  } else {
+    currentFormElement = currentPopupElement.querySelector('.popup__form');
+
+    if (selector === '.popup-edit') {
+      currentFormElement.name.value = profileNameElement.innerText;
+      currentFormElement.about.value = profileJobElement.innerText;
+    }
+
+    currentFormElement.addEventListener('submit', handleFormSubmit, {once: true});
+  }
+
+  currentPopupElement.querySelector('.popup__close-icon').addEventListener('click', closePopup, {once: true});
+  currentPopupElement.addEventListener('click', closePopupByClickOverlay, {once: true});
 
   currentPopupElement.classList.add('popup_faded-in');
 }
@@ -114,26 +123,24 @@ function handleFormSubmit (event) {
         link: currentFormElement.link.value
       }, false);
       currentFormElement.reset();
-      break;
   }
 
-  currentFormElement.removeEventListener('submit', handleFormSubmit);
   closePopup();
 }
 
-const closePopup = function () {
-  currentPopupElement.classList.add('popup_faded-out');
-}
-
-const closePopupByClickOverlay = function (event) {
+function closePopupByClickOverlay (event) {
   if (event.target !== event.currentTarget) {
     return;
   }
   closePopup();
 }
 
-profileEditButtonElement.addEventListener('click', () => openPopup('popup-edit'));
-profileAddButtonElement.addEventListener('click', () => openPopup('popup-add'));
+function closePopup () {
+  currentPopupElement.classList.add('popup_faded-out');
+}
+
+profileEditButtonElement.addEventListener('click', openPopup);
+profileAddButtonElement.addEventListener('click', openPopup);
 
 document.addEventListener('animationend', function (event) {
   if (event.animationName === 'fade-out') {
