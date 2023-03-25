@@ -1,4 +1,4 @@
-.popup__close {
+.popup__close-icon {
   width: 32px;
   height: 32px;
   border: none;
@@ -10,13 +10,13 @@
   transition: opacity 0.5s;
 }
 
-.popup__close:hover {
+.popup__close-icon:hover {
   border-radius: 2px;
   opacity: .6;
 }
 
 @media screen and (max-width: 767px) {
-  .popup__close {
+  .popup__close-icon {
     width: 20px;
     height: 20px;
     top: -36px;

@@ -68,10 +68,10 @@ function openPopupImage (event) {
 
   currentPopupElement.querySelector('.popup__caption').textContent = event.target.alt;
 
-  currentPopupElement.querySelector('.popup__close').addEventListener('click', closePopup);
+  currentPopupElement.querySelector('.popup__close-icon').addEventListener('click', closePopup);
   currentPopupElement.addEventListener('click', closePopupByClickOverlay);
 
-  currentPopupElement.classList.add('popup_opened');
+  currentPopupElement.classList.add('popup_faded-in');
 }
 
 const profileElement = document.querySelector('.profile');
@@ -94,10 +94,10 @@ const openPopup = function (popupId) {
 
   currentFormElement.addEventListener('submit', handleFormSubmit);
 
-  currentPopupElement.querySelector('.popup__close').addEventListener('click', closePopup);
+  currentPopupElement.querySelector('.popup__close-icon').addEventListener('click', closePopup);
   currentPopupElement.addEventListener('click', closePopupByClickOverlay);
 
-  currentPopupElement.classList.add('popup_opened');
+  currentPopupElement.classList.add('popup_faded-in');
 }
 
 function handleFormSubmit (event) {
@@ -122,7 +122,7 @@ function handleFormSubmit (event) {
 }
 
 const closePopup = function () {
-  currentPopupElement.classList.remove('popup_opened');
+  currentPopupElement.classList.add('popup_faded-out');
 }
 
 const closePopupByClickOverlay = function (event) {
@@ -134,3 +134,9 @@ const closePopupByClickOverlay = function (event) {
 
 profileEditButtonElement.addEventListener('click', () => openPopup('popup-edit'));
 profileAddButtonElement.addEventListener('click', () => openPopup('popup-add'));
+
+document.addEventListener('animationend', function (event) {
+  if (event.animationName === 'fade-out') {
+    event.target.classList.remove('popup_faded-in', 'popup_faded-out');
+  }
+});
