@@ -34,23 +34,23 @@ const initialCards = [
 const listElements = document.querySelector('.elements');
 const templateElement = document.getElementById('element-template').content;
 
-initialCards.forEach(renderElement);
+initialCards.forEach(createCard);
 
-function renderElement (item, append = true) {
+function createCard (data, appendCard = true) {
   const htmlElement = templateElement.cloneNode(true);
 
   const imageElement = htmlElement.querySelector('.element__image');
-  imageElement.src = item.link;
-  imageElement.alt = item.name;
+  imageElement.src = data.link;
+  imageElement.alt = data.name;
 
   imageElement.addEventListener('click', openPopup);
 
   htmlElement.querySelector('.element__trash-icon').addEventListener('click', removeCardElement);
   htmlElement.querySelector('.element__like-icon').addEventListener('click', toggleLikeIconActivity);
 
-  htmlElement.querySelector('.element__title').textContent = item.name;
+  htmlElement.querySelector('.element__title').textContent = data.name;
 
-  if (append) {
+  if (appendCard) {
     listElements.append(htmlElement);
   } else {
     listElements.prepend(htmlElement);
@@ -118,7 +118,7 @@ function handleFormSubmit (event) {
       profileJobElement.textContent = currentFormElement.about.value;
       break;
     case 'add-card':
-      renderElement({
+      createCard({
         name: currentFormElement.name.value,
         link: currentFormElement.link.value
       }, false);
