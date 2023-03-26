@@ -40,6 +40,7 @@
 @import url(../blocks/footer/__copyright/footer__copyright.css);
 
 @import url(../blocks/popup/popup.css);
+@import url(../blocks/popup/_opened/popup_opened.css);
 @import url(../blocks/popup/_faded-in/popup_faded-in.css);
 @import url(../blocks/popup/_faded-out/popup_faded-out.css);
 
