@@ -51,6 +51,24 @@ function toggleLikeIconActivity (event) {
   event.target.classList.toggle('element__like-icon_active');
 }
 
+function handleImagePopup (event) {
+  const target = event.target;
+
+  popupImageElement.src = target.src;
+  popupImageElement.alt = target.alt;
+  popupCaptionElement.textContent = target.alt;
+
+  openPopup(imagePopupElement);
+}
+
+function openPopup (popupElement) {
+  popupElement.classList.add('popup_opened');
+}
+
+function closePopup (popupElement) {
+  popupElement.classList.remove('popup_opened');
+}
+
 let currentPopupElement = null;
 let currentFormElement = null;
 
