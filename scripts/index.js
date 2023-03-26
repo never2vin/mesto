@@ -1,8 +1,21 @@
-const config = {
-  'profile__edit-button': '.popup_type_edit',
-  'profile__add-button': '.popup_type_add',
-  'element__image': '.popup_type_image'
-}
+const profileElement = document.querySelector('.profile');
+const profileEditButtonElement = profileElement.querySelector('.profile__edit-button');
+const profileAddButtonElement = profileElement.querySelector('.profile__add-button');
+const profileNameElement = profileElement.querySelector('.profile__name');
+const profileJobElement = profileElement.querySelector('.profile__job');
+
+const profilePopupElement = document.querySelector('.popup_type_edit');
+const formEditProfileElement = profilePopupElement.querySelector('.popup__form');
+const buttonCloseProfilePopupElement = profilePopupElement.querySelector('.popup__close-icon')
+
+const cardPopupElement = document.querySelector('.popup_type_add');
+const formAddCardElement = cardPopupElement.querySelector('.popup__form');
+const buttonCloseCardPopupElement = cardPopupElement.querySelector('.popup__close-icon')
+
+const imagePopupElement = document.querySelector('.popup_type_image');
+const popupImageElement = imagePopupElement.querySelector('.popup__image');
+const popupCaptionElement = imagePopupElement.querySelector('.popup__caption');
+const buttonCloseImagePopupElement = imagePopupElement.querySelector('.popup__close-icon')
 
 const listElements = document.querySelector('.elements');
 const templateElement = document.getElementById('element-template').content;
@@ -37,12 +50,6 @@ function removeCardElement (event) {
 function toggleLikeIconActivity (event) {
   event.target.classList.toggle('element__like-icon_active');
 }
-
-const profileElement = document.querySelector('.profile');
-const profileEditButtonElement = profileElement.querySelector('.profile__edit-button');
-const profileAddButtonElement = profileElement.querySelector('.profile__add-button');
-const profileNameElement = profileElement.querySelector('.profile__name');
-const profileJobElement = profileElement.querySelector('.profile__job');
 
 let currentPopupElement = null;
 let currentFormElement = null;
