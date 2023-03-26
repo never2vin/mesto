@@ -41,8 +41,6 @@
 
 @import url(../blocks/popup/popup.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
-@import url(../blocks/popup/_faded-in/popup_faded-in.css);
-@import url(../blocks/popup/_faded-out/popup_faded-out.css);
 
 @import url(../blocks/popup/__container/popup__container.css);
 @import url(../blocks/popup/__close-icon/popup__close-icon.css);
