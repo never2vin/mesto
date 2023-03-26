@@ -61,6 +61,28 @@ function handleImagePopup (event) {
   openPopup(imagePopupElement);
 }
 
+function handleFormEditProfileSubmit (event) {
+  event.preventDefault();
+
+  profileNameElement.textContent = formEditProfileElement.name.value;
+  profileJobElement.textContent = formEditProfileElement.about.value;
+
+  closePopup(profilePopupElement);
+}
+
+function handleFormAddCardSubmit (event) {
+  event.preventDefault();
+
+  listElements.prepend(createCard({
+    name: formAddCardElement.name.value,
+    link: formAddCardElement.link.value
+  }));
+
+  formAddCardElement.reset();
+
+  closePopup(cardPopupElement);
+}
+
 function openPopup (popupElement) {
   popupElement.classList.add('popup_opened');
 }
