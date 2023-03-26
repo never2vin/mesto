@@ -20,27 +20,27 @@ const buttonCloseImagePopupElement = imagePopupElement.querySelector('.popup__cl
 const listElements = document.querySelector('.elements');
 const templateElement = document.getElementById('element-template').content;
 
-initialCards.forEach(createCard);
+initialCards.forEach(renderCard);
 
-function createCard (data, appendCard = true) {
+function renderCard (data) {
+  listElements.append(createCard(data));
+}
+
+function createCard (data) {
   const htmlElement = templateElement.cloneNode(true);
 
   const imageElement = htmlElement.querySelector('.element__image');
   imageElement.src = data.link;
   imageElement.alt = data.name;
 
-  imageElement.addEventListener('click', openPopup);
+  imageElement.addEventListener('click', handleImagePopup);
 
   htmlElement.querySelector('.element__trash-icon').addEventListener('click', removeCardElement);
   htmlElement.querySelector('.element__like-icon').addEventListener('click', toggleLikeIconActivity);
 
   htmlElement.querySelector('.element__title').textContent = data.name;
 
-  if (appendCard) {
-    listElements.append(htmlElement);
-  } else {
-    listElements.prepend(htmlElement);
-  }
+  return htmlElement;
 }
 
 function removeCardElement (event) {
