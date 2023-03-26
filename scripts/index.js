@@ -6,16 +6,16 @@ const profileJobElement = profileElement.querySelector('.profile__job');
 
 const profilePopupElement = document.querySelector('.popup_type_edit');
 const formEditProfileElement = profilePopupElement.querySelector('.popup__form');
-const buttonCloseProfilePopupElement = profilePopupElement.querySelector('.popup__close-icon')
+const buttonCloseProfilePopupElement = profilePopupElement.querySelector('.popup__close-icon');
 
 const cardPopupElement = document.querySelector('.popup_type_add');
 const formAddCardElement = cardPopupElement.querySelector('.popup__form');
-const buttonCloseCardPopupElement = cardPopupElement.querySelector('.popup__close-icon')
+const buttonCloseCardPopupElement = cardPopupElement.querySelector('.popup__close-icon');
 
 const imagePopupElement = document.querySelector('.popup_type_image');
 const popupImageElement = imagePopupElement.querySelector('.popup__image');
 const popupCaptionElement = imagePopupElement.querySelector('.popup__caption');
-const buttonCloseImagePopupElement = imagePopupElement.querySelector('.popup__close-icon')
+const buttonCloseImagePopupElement = imagePopupElement.querySelector('.popup__close-icon');
 
 const listElements = document.querySelector('.elements');
 const templateElement = document.getElementById('element-template').content;
@@ -90,6 +90,22 @@ function openPopup (popupElement) {
 function closePopup (popupElement) {
   popupElement.classList.remove('popup_opened');
 }
+
+profileEditButtonElement.addEventListener('click', () => {
+  formEditProfileElement.name.value = profileNameElement.innerText;
+  formEditProfileElement.about.value = profileJobElement.innerText;
+
+  openPopup(profilePopupElement)
+});
+
+profileAddButtonElement.addEventListener('click', () => openPopup(cardPopupElement));
+
+formEditProfileElement.addEventListener('submit', handleFormEditProfileSubmit);
+formAddCardElement.addEventListener('submit', handleFormAddCardSubmit);
+
+buttonCloseProfilePopupElement.addEventListener('click', () => {closePopup(profilePopupElement)});
+buttonCloseCardPopupElement.addEventListener('click', () => closePopup(cardPopupElement));
+buttonCloseImagePopupElement.addEventListener('click', () => closePopup(imagePopupElement));
 
 let currentPopupElement = null;
 let currentFormElement = null;
