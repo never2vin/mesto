@@ -7,7 +7,7 @@
   background-color: #000;
   border: none;
   opacity: 1;
-  transition: opacity 0.5s;
+  transition: opacity .5s;
   margin-top: 20px;
 }
 
