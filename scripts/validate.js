@@ -21,7 +21,7 @@ const checkInputValidity = (formElement, inputElement, rest) => {
   }
 };
 
-const setEventListeners = (formElement, {submitButtonSelector, inputSelector, ...rest}) => {
+const setFormEventListeners = (formElement, {submitButtonSelector, inputSelector, ...rest}) => {
   const buttonElement = formElement.querySelector(submitButtonSelector);
   const inputList = Array.from(formElement.querySelectorAll(inputSelector));
 
@@ -41,7 +41,7 @@ const enableValidation = ({formSelector, ...rest}) => {
       event.preventDefault;
     });
 
-    setEventListeners(formElement, rest);
+    setFormEventListeners(formElement, rest);
   });
 };
 

@@ -58,6 +58,7 @@ function handleImagePopup (event) {
   popupImageElement.alt = target.alt;
   popupCaptionElement.textContent = target.alt;
 
+  setPopupEventListeners(imagePopupElement);
   openPopup(imagePopupElement);
 }
 
@@ -91,14 +92,37 @@ function closePopup (popupElement) {
   popupElement.classList.remove('popup_opened');
 }
 
+function closePopupByClickOverlay (event, popupElement) {
+  if (event.target !== event.currentTarget) {
+    return;
+  }
+  closePopup(popupElement);
+}
+
+function setPopupEventListeners (popupElement) {
+  popupElement.addEventListener('click', event => closePopupByClickOverlay(event, popupElement));
+
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      closePopup(popupElement);
+    }
+  }, {once: true});
+}
+
 profileEditButtonElement.addEventListener('click', () => {
   formEditProfileElement.name.value = profileNameElement.innerText;
   formEditProfileElement.about.value = profileJobElement.innerText;
 
-  openPopup(profilePopupElement)
+  setPopupEventListeners(profilePopupElement);
+  openPopup(profilePopupElement);
 });
 
-profileAddButtonElement.addEventListener('click', () => openPopup(cardPopupElement));
+profileAddButtonElement.addEventListener('click', () => {
+  formAddCardElement.reset();
+
+  setPopupEventListeners(cardPopupElement);
+  openPopup(cardPopupElement);
+});
 
 formEditProfileElement.addEventListener('submit', handleFormEditProfileSubmit);
 formAddCardElement.addEventListener('submit', handleFormAddCardSubmit);
