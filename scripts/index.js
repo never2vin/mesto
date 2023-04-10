@@ -107,10 +107,9 @@ function closeByEscape(event) {
 }
 
 function closePopupByClickOverlay (event, popupElement) {
-  if (event.target !== event.currentTarget) {
-    return;
+  if (event.target === event.currentTarget) {
+    closePopup(popupElement);
   }
-  closePopup(popupElement);
 }
 
 profileEditButtonElement.addEventListener('click', () => {
@@ -132,3 +131,7 @@ formAddCardElement.addEventListener('submit', handleFormAddCardSubmit);
 buttonCloseProfilePopupElement.addEventListener('click', () => {closePopup(profilePopupElement)});
 buttonCloseCardPopupElement.addEventListener('click', () => closePopup(cardPopupElement));
 buttonCloseImagePopupElement.addEventListener('click', () => closePopup(imagePopupElement));
+
+profilePopupElement.addEventListener('click', event => closePopupByClickOverlay(event, profilePopupElement));
+cardPopupElement.addEventListener('click', event => closePopupByClickOverlay(event, cardPopupElement));
+imagePopupElement.addEventListener('click', event => closePopupByClickOverlay(event, imagePopupElement));
