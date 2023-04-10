@@ -3,9 +3,3 @@
   max-width: 75vw;
   position: relative;
 }
-
-@media screen and (max-width: 767px) {
-  .popup__content {
-    width: 240px;
-  }
-}
