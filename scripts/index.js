@@ -81,6 +81,9 @@ function handleFormAddCardSubmit (event) {
 
   formAddCardElement.reset();
 
+  event.submitter.classList.add('popup__submit_disabled');
+  event.submitter.disabled = true;
+
   closePopup(cardPopupElement);
 }
 
