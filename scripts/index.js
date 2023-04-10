@@ -58,7 +58,6 @@ function handleImagePopup (event) {
   popupImageElement.alt = target.alt;
   popupCaptionElement.textContent = target.alt;
 
-  setPopupEventListeners(imagePopupElement);
   openPopup(imagePopupElement);
 }
 
@@ -88,11 +87,23 @@ function handleFormAddCardSubmit (event) {
 }
 
 function openPopup (popupElement) {
+  document.addEventListener('keydown', closeByEscape);
+
   popupElement.classList.add('popup_opened');
 }
 
 function closePopup (popupElement) {
+  document.removeEventListener('keydown', closeByEscape);
+
   popupElement.classList.remove('popup_opened');
+}
+
+function closeByEscape(event) {
+  if (event.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_opened');
+
+    closePopup(openedPopup);
+  }
 }
 
 function closePopupByClickOverlay (event, popupElement) {
@@ -102,28 +113,16 @@ function closePopupByClickOverlay (event, popupElement) {
   closePopup(popupElement);
 }
 
-function setPopupEventListeners (popupElement) {
-  popupElement.addEventListener('click', event => closePopupByClickOverlay(event, popupElement));
-
-  document.addEventListener('keydown', event => {
-    if (event.key === 'Escape') {
-      closePopup(popupElement);
-    }
-  }, {once: true});
-}
-
 profileEditButtonElement.addEventListener('click', () => {
   formEditProfileElement.name.value = profileNameElement.innerText;
   formEditProfileElement.about.value = profileJobElement.innerText;
 
-  setPopupEventListeners(profilePopupElement);
   openPopup(profilePopupElement);
 });
 
 profileAddButtonElement.addEventListener('click', () => {
   formAddCardElement.reset();
 
-  setPopupEventListeners(cardPopupElement);
   openPopup(cardPopupElement);
 });
 
