@@ -21,31 +21,12 @@ const popupCaptionElement = imagePopupElement.querySelector('.popup__caption');
 const buttonCloseImagePopupElement = imagePopupElement.querySelector('.popup__close-icon');
 
 const listElements = document.querySelector('.elements');
-const templateElement = document.getElementById('element-template').content;
 
 initialCards.forEach(data => {
   const card = new Card(data, '#element-template');
   const cardElement = card.generateCard();
   listElements.append(cardElement);
 });
-
-function removeCardElement (event) {
-  event.target.closest('.element').remove();
-}
-
-function toggleLikeIconActivity (event) {
-  event.target.classList.toggle('element__like-icon_active');
-}
-
-function handleImagePopup (event) {
-  const target = event.target;
-
-  popupImageElement.src = target.src;
-  popupImageElement.alt = target.alt;
-  popupCaptionElement.textContent = target.alt;
-
-  openPopup(imagePopupElement);
-}
 
 function handleFormEditProfileSubmit (event) {
   event.preventDefault();
@@ -59,10 +40,14 @@ function handleFormEditProfileSubmit (event) {
 function handleFormAddCardSubmit (event) {
   event.preventDefault();
 
-  listElements.prepend(createCard({
+  const data = {
     name: formAddCardElement.name.value,
     link: formAddCardElement.link.value
-  }));
+  };
+
+  const card = new Card(data, '#element-template');
+  const cardElement = card.generateCard();
+  listElements.prepend(cardElement);
 
   formAddCardElement.reset();
 
