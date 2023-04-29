@@ -1,6 +1,7 @@
 import { initialCards } from "./cards.js";
 import Card from "./Card.js";
 import Popup from "./Popup.js";
+import FormValidator from "./FormValidator.js";
 
 const profileElement = document.querySelector('.profile');
 const profileEditButtonElement = profileElement.querySelector('.profile__edit-button');
@@ -24,6 +25,21 @@ initialCards.forEach(data => {
   const cardElement = card.generateCard();
   listElements.append(cardElement);
 });
+
+const object = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__submit',
+  inactiveButtonClass: 'popup__submit_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_visible'
+}
+
+const profileFormValidator = new FormValidator(object, formEditProfileElement);
+const cardFormValidator = new FormValidator(object, formAddCardElement);
+
+profileFormValidator.enableValidation();
+cardFormValidator.enableValidation();
 
 function handleFormEditProfileSubmit (event) {
   event.preventDefault();
