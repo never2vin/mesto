@@ -3,6 +3,15 @@ import Card from "./Card.js";
 import Popup from "./Popup.js";
 import FormValidator from "./FormValidator.js";
 
+const validationConfig = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__submit',
+  inactiveButtonClass: 'popup__submit_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_visible'
+}
+
 const profileElement = document.querySelector('.profile');
 const profileEditButtonElement = profileElement.querySelector('.profile__edit-button');
 const profileAddButtonElement = profileElement.querySelector('.profile__add-button');
@@ -26,17 +35,8 @@ initialCards.forEach(data => {
   listElements.append(cardElement);
 });
 
-const object = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__submit',
-  inactiveButtonClass: 'popup__submit_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error_visible'
-}
-
-const profileFormValidator = new FormValidator(object, formEditProfileElement);
-const cardFormValidator = new FormValidator(object, formAddCardElement);
+const profileFormValidator = new FormValidator(validationConfig, formEditProfileElement);
+const cardFormValidator = new FormValidator(validationConfig, formAddCardElement);
 
 profileFormValidator.enableValidation();
 cardFormValidator.enableValidation();
@@ -99,12 +99,14 @@ function closePopupByClickOverlay (event, popupElement) {
 profileEditButtonElement.addEventListener('click', () => {
   formEditProfileElement.name.value = profileNameElement.innerText;
   formEditProfileElement.about.value = profileJobElement.innerText;
+  profileFormValidator.resetValidation();
 
   openPopup(profilePopupElement);
 });
 
 profileAddButtonElement.addEventListener('click', () => {
   formAddCardElement.reset();
+  cardFormValidator.resetValidation();
 
   openPopup(cardPopupElement);
 });
