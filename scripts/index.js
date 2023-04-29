@@ -1,3 +1,6 @@
+import { initialCards } from "./cards.js";
+import Card from "./Card.js";
+
 const profileElement = document.querySelector('.profile');
 const profileEditButtonElement = profileElement.querySelector('.profile__edit-button');
 const profileAddButtonElement = profileElement.querySelector('.profile__add-button');
@@ -20,28 +23,11 @@ const buttonCloseImagePopupElement = imagePopupElement.querySelector('.popup__cl
 const listElements = document.querySelector('.elements');
 const templateElement = document.getElementById('element-template').content;
 
-initialCards.forEach(renderCard);
-
-function renderCard (data) {
-  listElements.append(createCard(data));
-}
-
-function createCard (data) {
-  const htmlElement = templateElement.cloneNode(true);
-
-  const imageElement = htmlElement.querySelector('.element__image');
-  imageElement.src = data.link;
-  imageElement.alt = data.name;
-
-  imageElement.addEventListener('click', handleImagePopup);
-
-  htmlElement.querySelector('.element__trash-icon').addEventListener('click', removeCardElement);
-  htmlElement.querySelector('.element__like-icon').addEventListener('click', toggleLikeIconActivity);
-
-  htmlElement.querySelector('.element__title').textContent = data.name;
-
-  return htmlElement;
-}
+initialCards.forEach(data => {
+  const card = new Card(data, '#element-template');
+  const cardElement = card.generateCard();
+  listElements.append(cardElement);
+});
 
 function removeCardElement (event) {
   event.target.closest('.element').remove();
