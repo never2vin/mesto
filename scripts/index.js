@@ -1,5 +1,6 @@
 import { initialCards } from "./cards.js";
 import Card from "./Card.js";
+import Popup from "./Popup.js";
 
 const profileElement = document.querySelector('.profile');
 const profileEditButtonElement = profileElement.querySelector('.profile__edit-button');
@@ -16,14 +17,13 @@ const formAddCardElement = cardPopupElement.querySelector('.popup__form');
 const buttonCloseCardPopupElement = cardPopupElement.querySelector('.popup__close-icon');
 
 const imagePopupElement = document.querySelector('.popup_type_image');
-const popupImageElement = imagePopupElement.querySelector('.popup__image');
-const popupCaptionElement = imagePopupElement.querySelector('.popup__caption');
 const buttonCloseImagePopupElement = imagePopupElement.querySelector('.popup__close-icon');
 
 const listElements = document.querySelector('.elements');
+const imagePopup = new Popup('.popup_type_image');
 
 initialCards.forEach(data => {
-  const card = new Card(data, '#element-template');
+  const card = new Card(data, '#element-template', imagePopup);
   const cardElement = card.generateCard();
   listElements.append(cardElement);
 });
@@ -45,7 +45,7 @@ function handleFormAddCardSubmit (event) {
     link: formAddCardElement.link.value
   };
 
-  const card = new Card(data, '#element-template');
+  const card = new Card(data, '#element-template', imagePopup);
   const cardElement = card.generateCard();
   listElements.prepend(cardElement);
 
