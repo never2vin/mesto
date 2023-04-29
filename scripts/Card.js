@@ -27,10 +27,11 @@ export default class Card {
 
   _removeCardElement = () => {
     this._cardElement.remove();
+    this._cardElement = null;
   }
 
   _handleOpenPopup = () => {
-      this._imagePopup.open(this._data);
+    this._imagePopup.open(this._data);
   }
 
   generateCard() {

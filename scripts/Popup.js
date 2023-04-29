@@ -1,9 +1,17 @@
 export default class Popup {
+
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
     this._popupImage = this._popup.querySelector('.popup__image');
     this._popupCaption = this._popup.querySelector('.popup__caption');
     this._popupCloseIcon = this._popup.querySelector('.popup__close-icon');
+  }
+
+  _setEventListeners() {
+    this._popup.addEventListener('click', this._closePopupByClickOverlay);
+    this._popupCloseIcon.addEventListener('click', this.close);
+
+    document.addEventListener('keydown', this._closeByEscape);
   }
 
   _closeByEscape = (event) =>  {
@@ -12,9 +20,14 @@ export default class Popup {
     }
   }
 
+  _closePopupByClickOverlay = (event) =>  {
+    if (event.target === event.currentTarget) {
+      this.close();
+    }
+  }
+
   open = (data) => {
-    document.addEventListener('keydown', this._closeByEscape);
-    this._popupCloseIcon.addEventListener('click', this.close);
+    this._setEventListeners();
 
     this._popupImage.src = data.link;
     this._popupImage.alt = data.name;

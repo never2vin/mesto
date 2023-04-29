@@ -16,9 +16,6 @@ const cardPopupElement = document.querySelector('.popup_type_add');
 const formAddCardElement = cardPopupElement.querySelector('.popup__form');
 const buttonCloseCardPopupElement = cardPopupElement.querySelector('.popup__close-icon');
 
-const imagePopupElement = document.querySelector('.popup_type_image');
-const buttonCloseImagePopupElement = imagePopupElement.querySelector('.popup__close-icon');
-
 const listElements = document.querySelector('.elements');
 const imagePopup = new Popup('.popup_type_image');
 
@@ -101,8 +98,6 @@ formAddCardElement.addEventListener('submit', handleFormAddCardSubmit);
 
 buttonCloseProfilePopupElement.addEventListener('click', () => {closePopup(profilePopupElement)});
 buttonCloseCardPopupElement.addEventListener('click', () => closePopup(cardPopupElement));
-buttonCloseImagePopupElement.addEventListener('click', () => closePopup(imagePopupElement));
 
 profilePopupElement.addEventListener('click', event => closePopupByClickOverlay(event, profilePopupElement));
 cardPopupElement.addEventListener('click', event => closePopupByClickOverlay(event, cardPopupElement));
-imagePopupElement.addEventListener('click', event => closePopupByClickOverlay(event, imagePopupElement));
