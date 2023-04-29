@@ -30,9 +30,7 @@ const listElements = document.querySelector('.elements');
 const imagePopup = new Popup('.popup_type_image');
 
 initialCards.forEach(data => {
-  const card = new Card(data, '#element-template', imagePopup);
-  const cardElement = card.generateCard();
-  listElements.append(cardElement);
+  listElements.append(createCardElement(data));
 });
 
 const profileFormValidator = new FormValidator(validationConfig, formEditProfileElement);
@@ -40,6 +38,11 @@ const cardFormValidator = new FormValidator(validationConfig, formAddCardElement
 
 profileFormValidator.enableValidation();
 cardFormValidator.enableValidation();
+
+function createCardElement(data) {
+  const card = new Card(data, '#element-template', imagePopup);
+  return card.generateCard()
+}
 
 function handleFormEditProfileSubmit (event) {
   event.preventDefault();
@@ -53,13 +56,11 @@ function handleFormEditProfileSubmit (event) {
 function handleFormAddCardSubmit (event) {
   event.preventDefault();
 
-  const data = {
+  const cardElement = createCardElement({
     name: formAddCardElement.name.value,
     link: formAddCardElement.link.value
-  };
+  });
 
-  const card = new Card(data, '#element-template', imagePopup);
-  const cardElement = card.generateCard();
   listElements.prepend(cardElement);
 
   formAddCardElement.reset();
