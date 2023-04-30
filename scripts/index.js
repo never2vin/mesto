@@ -1,6 +1,5 @@
 import { initialCards } from "./cards.js";
 import Card from "./Card.js";
-import Popup from "./Popup.js";
 import FormValidator from "./FormValidator.js";
 
 const validationConfig = {
@@ -26,8 +25,12 @@ const cardPopupElement = document.querySelector('.popup_type_add');
 const formAddCardElement = cardPopupElement.querySelector('.popup__form');
 const buttonCloseCardPopupElement = cardPopupElement.querySelector('.popup__close-icon');
 
+const imagePopupElement = document.querySelector('.popup_type_image');
+const popupImageElement = imagePopupElement.querySelector('.popup__image');
+const popupCaptionElement = imagePopupElement.querySelector('.popup__caption');
+const buttonCloseImagePopupElement = imagePopupElement.querySelector('.popup__close-icon');
+
 const listElements = document.querySelector('.elements');
-const imagePopup = new Popup('.popup_type_image');
 
 initialCards.forEach(data => {
   listElements.append(createCardElement(data));
@@ -40,8 +43,16 @@ profileFormValidator.enableValidation();
 cardFormValidator.enableValidation();
 
 function createCardElement(data) {
-  const card = new Card(data, '#element-template', imagePopup);
+  const card = new Card(data, '#element-template', openImagePopup);
   return card.generateCard()
+}
+
+function openImagePopup (data) {
+  popupImageElement.src = data.link;
+  popupImageElement.alt = data.name;
+  popupCaptionElement.textContent = data.name;
+
+  openPopup(imagePopupElement);
 }
 
 function handleFormEditProfileSubmit (event) {
@@ -117,6 +128,8 @@ formAddCardElement.addEventListener('submit', handleFormAddCardSubmit);
 
 buttonCloseProfilePopupElement.addEventListener('click', () => {closePopup(profilePopupElement)});
 buttonCloseCardPopupElement.addEventListener('click', () => closePopup(cardPopupElement));
+buttonCloseImagePopupElement.addEventListener('click', () => closePopup(imagePopupElement));
 
 profilePopupElement.addEventListener('click', event => closePopupByClickOverlay(event, profilePopupElement));
 cardPopupElement.addEventListener('click', event => closePopupByClickOverlay(event, cardPopupElement));
+imagePopupElement.addEventListener('click', event => closePopupByClickOverlay(event, imagePopupElement));

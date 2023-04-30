@@ -1,8 +1,8 @@
 export default class Card {
-  constructor(data, templateSelector, imagePopup) {
+  constructor(data, templateSelector, openImagePopup) {
     this._data = data;
     this._templateSelector = templateSelector;
-    this._imagePopup = imagePopup;
+    this._openImagePopup = openImagePopup;
   }
 
   _getTemplate() {
@@ -16,7 +16,7 @@ export default class Card {
   }
 
   _setEventListeners() {
-    this._imageElement.addEventListener('click', this._handleOpenPopup);
+    this._imageElement.addEventListener('click', this._handleImagePopup);
     this._likeIconElement.addEventListener('click', this._toggleLikeIconActivity);
     this._cardElement.querySelector('.element__trash-icon').addEventListener('click', this._removeCardElement);
   }
@@ -30,8 +30,8 @@ export default class Card {
     this._cardElement = null;
   }
 
-  _handleOpenPopup = () => {
-    this._imagePopup.open(this._data);
+  _handleImagePopup = () => {
+    this._openImagePopup(this._data);
   }
 
   generateCard() {
