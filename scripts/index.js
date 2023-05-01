@@ -19,16 +19,15 @@ const profileJobElement = profileElement.querySelector('.profile__job');
 
 const profilePopupElement = document.querySelector('.popup_type_edit');
 const formEditProfileElement = profilePopupElement.querySelector('.popup__form');
-const buttonCloseProfilePopupElement = profilePopupElement.querySelector('.popup__close-icon');
 
 const cardPopupElement = document.querySelector('.popup_type_add');
 const formAddCardElement = cardPopupElement.querySelector('.popup__form');
-const buttonCloseCardPopupElement = cardPopupElement.querySelector('.popup__close-icon');
 
 const imagePopupElement = document.querySelector('.popup_type_image');
 const popupImageElement = imagePopupElement.querySelector('.popup__image');
 const popupCaptionElement = imagePopupElement.querySelector('.popup__caption');
-const buttonCloseImagePopupElement = imagePopupElement.querySelector('.popup__close-icon');
+
+const buttonCloseList = document.querySelectorAll('.popup__close-icon');
 
 const listElements = document.querySelector('.elements');
 
@@ -121,10 +120,8 @@ profileAddButtonElement.addEventListener('click', () => {
 formEditProfileElement.addEventListener('submit', handleFormEditProfileSubmit);
 formAddCardElement.addEventListener('submit', handleFormAddCardSubmit);
 
-buttonCloseProfilePopupElement.addEventListener('click', () => {closePopup(profilePopupElement)});
-buttonCloseCardPopupElement.addEventListener('click', () => closePopup(cardPopupElement));
-buttonCloseImagePopupElement.addEventListener('click', () => closePopup(imagePopupElement));
-
-profilePopupElement.addEventListener('click', event => closePopupByClickOverlay(event, profilePopupElement));
-cardPopupElement.addEventListener('click', event => closePopupByClickOverlay(event, cardPopupElement));
-imagePopupElement.addEventListener('click', event => closePopupByClickOverlay(event, imagePopupElement));
+buttonCloseList.forEach(button => {
+  const popup = button.closest('.popup');
+  popup.addEventListener('mousedown', (event) => closePopupByClickOverlay(event, popup));
+  button.addEventListener('click', () => closePopup(popup));
+});
