@@ -1,6 +1,7 @@
 import { initialCards } from "../utils/constants.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
+import Section from "../components/Section.js";
 
 const validationConfig = {
   formSelector: '.popup__form',
@@ -29,11 +30,16 @@ const popupCaptionElement = imagePopupElement.querySelector('.popup__caption');
 
 const buttonCloseList = document.querySelectorAll('.popup__close-icon');
 
-const listElements = document.querySelector('.elements');
+const cardList = new Section({
+  items: initialCards,
+  renderer: (item) => {
+    const card = new Card(item, '#element-template', openImagePopup);
+    const cardElement = card.generateCard();
+    cardList.addItem(cardElement);
+  }
+}, '.elements');
 
-initialCards.forEach(data => {
-  listElements.append(createCardElement(data));
-});
+cardList.renderItems();
 
 const profileFormValidator = new FormValidator(validationConfig, formEditProfileElement);
 const cardFormValidator = new FormValidator(validationConfig, formAddCardElement);
