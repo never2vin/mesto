@@ -2,6 +2,7 @@ import { initialCards } from "../utils/constants.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
+import PopupWithImage from "../components/PopupWithImage.js";
 
 const validationConfig = {
   formSelector: '.popup__form',
@@ -46,17 +47,16 @@ const cardFormValidator = new FormValidator(validationConfig, formAddCardElement
 profileFormValidator.enableValidation();
 cardFormValidator.enableValidation();
 
-function createCardElement(data) {
-  const card = new Card(data, '#element-template', openImagePopup);
+function createCardElement(cardData) {
+  const card = new Card({
+    data: cardData,
+    handleCardClick: (data) => {
+      const popup = new PopupWithImage(data, '.popup_type_image');
+      popup.open();
+    }
+  }, '#element-template');
+
   return card.generateCard()
-}
-
-function openImagePopup (data) {
-  popupImageElement.src = data.link;
-  popupImageElement.alt = data.name;
-  popupCaptionElement.textContent = data.name;
-
-  openPopup(imagePopupElement);
 }
 
 function handleFormEditProfileSubmit (event) {
