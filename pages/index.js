@@ -3,6 +3,7 @@ import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
+import PopupWithForm from "../components/PopupWithForm.js";
 
 const validationConfig = {
   formSelector: '.popup__form',
@@ -59,14 +60,18 @@ function createCardElement(cardData) {
   return card.generateCard()
 }
 
+const popupEditProfile = new PopupWithForm('.popup_type_edit', handleFormEditProfileSubmit);
+
 function handleFormEditProfileSubmit (event) {
   event.preventDefault();
 
   profileNameElement.textContent = formEditProfileElement.name.value;
   profileJobElement.textContent = formEditProfileElement.about.value;
 
-  closePopup(profilePopupElement);
+  popupEditProfile.close();
 }
+
+const popupAddCard = new PopupWithForm('.popup_type_add', handleFormAddCardSubmit);
 
 function handleFormAddCardSubmit (event) {
   event.preventDefault();
@@ -78,27 +83,7 @@ function handleFormAddCardSubmit (event) {
 
   cardList.addItem(cardElement);
 
-  closePopup(cardPopupElement);
-}
-
-function openPopup (popupElement) {
-  document.addEventListener('keydown', closeByEscape);
-
-  popupElement.classList.add('popup_opened');
-}
-
-function closePopup (popupElement) {
-  document.removeEventListener('keydown', closeByEscape);
-
-  popupElement.classList.remove('popup_opened');
-}
-
-function closeByEscape(event) {
-  if (event.key === 'Escape') {
-    const openedPopup = document.querySelector('.popup_opened');
-
-    closePopup(openedPopup);
-  }
+  popupAddCard.close();
 }
 
 function closePopupByClickOverlay (event, popupElement) {
@@ -112,14 +97,14 @@ profileEditButtonElement.addEventListener('click', () => {
   formEditProfileElement.about.value = profileJobElement.innerText;
   profileFormValidator.resetValidation();
 
-  openPopup(profilePopupElement);
+  popupEditProfile.open();;
 });
 
 profileAddButtonElement.addEventListener('click', () => {
   formAddCardElement.reset();
   cardFormValidator.resetValidation();
 
-  openPopup(cardPopupElement);
+  popupAddCard.open();
 });
 
 formEditProfileElement.addEventListener('submit', handleFormEditProfileSubmit);
@@ -128,5 +113,5 @@ formAddCardElement.addEventListener('submit', handleFormAddCardSubmit);
 buttonCloseList.forEach(button => {
   const popup = button.closest('.popup');
   popup.addEventListener('mousedown', (event) => closePopupByClickOverlay(event, popup));
-  button.addEventListener('click', () => closePopup(popup));
+  // button.addEventListener('click', () => closePopup(popup));
 });
