@@ -33,8 +33,7 @@ const buttonCloseList = document.querySelectorAll('.popup__close-icon');
 const cardList = new Section({
   items: initialCards,
   renderer: (item) => {
-    const card = new Card(item, '#element-template', openImagePopup);
-    const cardElement = card.generateCard();
+    const cardElement = createCardElement(item);
     cardList.addItem(cardElement);
   }
 }, '.elements');
@@ -77,7 +76,7 @@ function handleFormAddCardSubmit (event) {
     link: formAddCardElement.link.value
   });
 
-  listElements.prepend(cardElement);
+  cardList.addItem(cardElement);
 
   closePopup(cardPopupElement);
 }
