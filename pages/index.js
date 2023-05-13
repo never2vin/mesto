@@ -20,13 +20,13 @@ const profileAddButtonElement = profileElement.querySelector('.profile__add-butt
 const profileNameElement = profileElement.querySelector('.profile__name');
 const profileJobElement = profileElement.querySelector('.profile__job');
 
+const popupList = document.querySelectorAll('.popup');
+
 const profilePopupElement = document.querySelector('.popup_type_edit');
 const formEditProfileElement = profilePopupElement.querySelector('.popup__form');
 
 const cardPopupElement = document.querySelector('.popup_type_add');
 const formAddCardElement = cardPopupElement.querySelector('.popup__form');
-
-const buttonCloseList = document.querySelectorAll('.popup__close-icon');
 
 const cardList = new Section({
   items: initialCards,
@@ -57,25 +57,29 @@ function createCardElement(cardData) {
   return card.generateCard()
 }
 
-const popupEditProfile = new PopupWithForm('.popup_type_edit', handleFormEditProfileSubmit);
+const popupEditProfile = new PopupWithForm({
+  popupSelector: '.popup_type_edit',
+  handleFormSubmit: (userData) => {
+    profileNameElement.textContent = userData.name;
+    profileJobElement.textContent = userData.about;
+
+    popupEditProfile.close();
+  }
+});
+
 popupEditProfile.setEventListeners();
 
-function handleFormEditProfileSubmit (userData) {
-  profileNameElement.textContent = userData.name;
-  profileJobElement.textContent = userData.about;
+const popupAddCard = new PopupWithForm({
+  popupSelector: '.popup_type_add',
+  handleFormSubmit: (data) => {
+    const cardElement = createCardElement(data);
+    cardList.addItem(cardElement);
 
-  popupEditProfile.close();
-}
+    popupAddCard.close()
+  }
+});
 
-const popupAddCard = new PopupWithForm('.popup_type_add', handleFormAddCardSubmit);
 popupAddCard.setEventListeners();
-
-function handleFormAddCardSubmit (cardData) {
-  const cardElement = createCardElement(cardData);
-  cardList.addItem(cardElement);
-
-  popupAddCard.close();
-}
 
 function closePopupByClickOverlay (event, popupElement) {
   if (event.target === event.currentTarget) {
@@ -98,10 +102,6 @@ profileAddButtonElement.addEventListener('click', () => {
   popupAddCard.open();
 });
 
-// formEditProfileElement.addEventListener('submit', handleFormEditProfileSubmit);
-// formAddCardElement.addEventListener('submit', handleFormAddCardSubmit);
-
-buttonCloseList.forEach(button => {
-  const popup = button.closest('.popup');
+popupList.forEach(popup => {
   popup.addEventListener('mousedown', (event) => closePopupByClickOverlay(event, popup));
 });
