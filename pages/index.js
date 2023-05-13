@@ -1,4 +1,12 @@
 import { initialCards,
+  validationConfig,
+  popupSelector,
+  popupFormSelector,
+  profilePopupSelector,
+  cardPopupSelector,
+  imagePopupSelector,
+  cardListSelector,
+  cardTemplateSelector,
   userNameSelector,
   userAboutSelector
 } from "../utils/constants.js";
@@ -10,26 +18,14 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 
-const validationConfig = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__submit',
-  inactiveButtonClass: 'popup__submit_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error_visible'
-}
-
 const profileElement = document.querySelector('.profile');
 const profileEditButtonElement = profileElement.querySelector('.profile__edit-button');
 const profileAddButtonElement = profileElement.querySelector('.profile__add-button');
 
-const popupList = document.querySelectorAll('.popup');
+const popupList = document.querySelectorAll(popupSelector);
 
-const profilePopupElement = document.querySelector('.popup_type_edit');
-const formEditProfileElement = profilePopupElement.querySelector('.popup__form');
-
-const cardPopupElement = document.querySelector('.popup_type_add');
-const formAddCardElement = cardPopupElement.querySelector('.popup__form');
+const formEditProfileElement = document.querySelector(profilePopupSelector).querySelector(popupFormSelector);
+const formAddCardElement = document.querySelector(cardPopupSelector).querySelector(popupFormSelector);
 
 const cardList = new Section({
   items: initialCards,
@@ -37,7 +33,7 @@ const cardList = new Section({
     const cardElement = createCardElement(item);
     cardList.addItem(cardElement);
   }
-}, '.elements');
+}, cardListSelector);
 
 cardList.renderItems();
 
@@ -53,17 +49,17 @@ function createCardElement(cardData) {
   const card = new Card({
     data: cardData,
     handleCardClick: (data) => {
-      const popup = new PopupWithImage(data, '.popup_type_image');
+      const popup = new PopupWithImage(data, imagePopupSelector);
       popup.setEventListeners();
       popup.open();
     }
-  }, '#element-template');
+  }, cardTemplateSelector);
 
   return card.generateCard()
 }
 
 const popupEditProfile = new PopupWithForm({
-  popupSelector: '.popup_type_edit',
+  popupSelector: profilePopupSelector,
   handleFormSubmit: (userData) => {
     userInfo.setUserInfo(userData);
 
@@ -74,7 +70,7 @@ const popupEditProfile = new PopupWithForm({
 popupEditProfile.setEventListeners();
 
 const popupAddCard = new PopupWithForm({
-  popupSelector: '.popup_type_add',
+  popupSelector: cardPopupSelector,
   handleFormSubmit: (data) => {
     const cardElement = createCardElement(data);
     cardList.addItem(cardElement);
