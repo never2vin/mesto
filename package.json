@@ -2,7 +2,7 @@
   "name": "mesto",
   "version": "1.0.0",
   "description": "Проектная работа Место на курсе Веб-разработчик в Яндекс.Практикуме",
-  "main": "./src/pages/index.js",
+  "main": "index.js",
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack serve"
