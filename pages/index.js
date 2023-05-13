@@ -1,9 +1,14 @@
-import { initialCards } from "../utils/constants.js";
+import { initialCards,
+  userNameSelector,
+  userAboutSelector
+} from "../utils/constants.js";
+
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
+import UserInfo from "../components/UserInfo.js";
 
 const validationConfig = {
   formSelector: '.popup__form',
@@ -17,8 +22,6 @@ const validationConfig = {
 const profileElement = document.querySelector('.profile');
 const profileEditButtonElement = profileElement.querySelector('.profile__edit-button');
 const profileAddButtonElement = profileElement.querySelector('.profile__add-button');
-const profileNameElement = profileElement.querySelector('.profile__name');
-const profileJobElement = profileElement.querySelector('.profile__job');
 
 const popupList = document.querySelectorAll('.popup');
 
@@ -37,6 +40,8 @@ const cardList = new Section({
 }, '.elements');
 
 cardList.renderItems();
+
+const userInfo = new UserInfo(userNameSelector, userAboutSelector);
 
 const profileFormValidator = new FormValidator(validationConfig, formEditProfileElement);
 const cardFormValidator = new FormValidator(validationConfig, formAddCardElement);
@@ -60,8 +65,7 @@ function createCardElement(cardData) {
 const popupEditProfile = new PopupWithForm({
   popupSelector: '.popup_type_edit',
   handleFormSubmit: (userData) => {
-    profileNameElement.textContent = userData.name;
-    profileJobElement.textContent = userData.about;
+    userInfo.setUserInfo(userData);
 
     popupEditProfile.close();
   }
@@ -81,15 +85,11 @@ const popupAddCard = new PopupWithForm({
 
 popupAddCard.setEventListeners();
 
-function closePopupByClickOverlay (event, popupElement) {
-  if (event.target === event.currentTarget) {
-    popupElement.classList.remove('popup_opened');
-  }
-}
-
 profileEditButtonElement.addEventListener('click', () => {
-  formEditProfileElement.name.value = profileNameElement.innerText;
-  formEditProfileElement.about.value = profileJobElement.innerText;
+  const {name, about} = userInfo.getUserInfo();
+  formEditProfileElement.name.value = name;
+  formEditProfileElement.about.value = about;
+
   profileFormValidator.resetValidation();
 
   popupEditProfile.open();;
@@ -101,6 +101,12 @@ profileAddButtonElement.addEventListener('click', () => {
 
   popupAddCard.open();
 });
+
+function closePopupByClickOverlay (event, popupElement) {
+  if (event.target === event.currentTarget) {
+    popupElement.classList.remove('popup_opened');
+  }
+}
 
 popupList.forEach(popup => {
   popup.addEventListener('mousedown', (event) => closePopupByClickOverlay(event, popup));
