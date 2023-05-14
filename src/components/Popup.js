@@ -12,7 +12,14 @@ export default class Popup {
     }
   }
 
+  _closePopupByClickOverlay = (event) =>  {
+    if (event.target === event.currentTarget) {
+      this.close();
+    }
+  }
+
   setEventListeners() {
+    this._popup.addEventListener('click', this._closePopupByClickOverlay);
     this._popupCloseIcon.addEventListener('click', this.close);
   }
 
