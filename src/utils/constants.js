@@ -37,7 +37,6 @@ export const validationConfig = {
 export const cardListSelector = '.elements';
 export const cardTemplateSelector = '#element-template';
 
-export const popupSelector = '.popup';
 export const profilePopupSelector = '.popup_type_edit';
 export const cardPopupSelector = '.popup_type_add';
 export const imagePopupSelector = '.popup_type_image';

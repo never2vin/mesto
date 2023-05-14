@@ -2,7 +2,6 @@ import "./index.css";
 
 import { initialCards,
   validationConfig,
-  popupSelector,
   popupFormSelector,
   profilePopupSelector,
   cardPopupSelector,
@@ -23,8 +22,6 @@ import UserInfo from "../components/UserInfo.js";
 const profileElement = document.querySelector('.profile');
 const profileEditButtonElement = profileElement.querySelector('.profile__edit-button');
 const profileAddButtonElement = profileElement.querySelector('.profile__add-button');
-
-const popupList = document.querySelectorAll(popupSelector);
 
 const formEditProfileElement = document.querySelector(profilePopupSelector).querySelector(popupFormSelector);
 const formAddCardElement = document.querySelector(cardPopupSelector).querySelector(popupFormSelector);
@@ -51,14 +48,15 @@ function createCardElement(cardData) {
   const card = new Card({
     data: cardData,
     handleCardClick: (data) => {
-      const popup = new PopupWithImage(data, imagePopupSelector);
-      popup.setEventListeners();
-      popup.open();
+      popupImage.open(data);
     }
   }, cardTemplateSelector);
 
   return card.generateCard()
 }
+
+const popupImage = new PopupWithImage(imagePopupSelector);
+popupImage.setEventListeners();
 
 const popupEditProfile = new PopupWithForm({
   popupSelector: profilePopupSelector,
@@ -98,14 +96,4 @@ profileAddButtonElement.addEventListener('click', () => {
   cardFormValidator.resetValidation();
 
   popupAddCard.open();
-});
-
-function closePopupByClickOverlay (event, popupElement) {
-  if (event.target === event.currentTarget) {
-    popupElement.classList.remove('popup_opened');
-  }
-}
-
-popupList.forEach(popup => {
-  popup.addEventListener('mousedown', (event) => closePopupByClickOverlay(event, popup));
 });
