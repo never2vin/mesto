@@ -48,10 +48,12 @@ popupEditProfile.setEventListeners();
 const popupAddCard = new PopupWithForm({
   popupSelector: cardPopupSelector,
   handleFormSubmit: (data) => {
-    const cardElement = createCardElement(data);
-    cardList.addItem(cardElement);
+    api.addCard(data).then(res => {
+      const cardElement = createCardElement(res);
+      cardList.addItem(cardElement);
 
-    popupAddCard.close()
+      popupAddCard.close()
+    });
   }
 });
 
