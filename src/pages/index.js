@@ -28,15 +28,18 @@ const profileAddButtonElement = profileElement.querySelector('.profile__add-butt
 const formEditProfileElement = document.querySelector(profilePopupSelector).querySelector(popupFormSelector);
 const formAddCardElement = document.querySelector(cardPopupSelector).querySelector(popupFormSelector);
 
+
 const popupImage = new PopupWithImage(imagePopupSelector);
 popupImage.setEventListeners();
 
 const popupEditProfile = new PopupWithForm({
   popupSelector: profilePopupSelector,
-  handleFormSubmit: (userData) => {
-    userInfo.setUserInfo(userData);
+  handleFormSubmit: (data) => {
+    api.updateUserInfo(data).then(res => {
+      userInfo.setUserInfo(res);
 
-    popupEditProfile.close();
+      popupEditProfile.close();
+    });
   }
 });
 
@@ -74,10 +77,12 @@ const cardList = new Section({
 
 const userInfo = new UserInfo(userNameSelector, userAboutSelector);
 
+//
 api.getUserInfo().then(data => {
   userInfo.setUserInfo(data);
 });
 
+//
 api.getInitialCards().then(items => {
   cardList.renderItems(items);
 });
