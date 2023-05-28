@@ -40,6 +40,7 @@ export const cardTemplateSelector = '#element-template';
 export const profilePopupSelector = '.popup_type_edit';
 export const cardPopupSelector = '.popup_type_add';
 export const imagePopupSelector = '.popup_type_image';
+export const confirmPopupSelector = '.popup_type_confirm';
 
 export const popupFormSelector = '.popup__form';
 

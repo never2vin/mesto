@@ -6,6 +6,7 @@ import { initialCards,
   profilePopupSelector,
   cardPopupSelector,
   imagePopupSelector,
+  confirmPopupSelector,
   cardListSelector,
   cardTemplateSelector,
   userNameSelector,
@@ -19,6 +20,7 @@ import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
+import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 import UserInfo from "../components/UserInfo.js";
 
 const profileElement = document.querySelector('.profile');
@@ -31,6 +33,9 @@ const formAddCardElement = document.querySelector(cardPopupSelector).querySelect
 
 const popupImage = new PopupWithImage(imagePopupSelector);
 popupImage.setEventListeners();
+
+const popupConfirm = new PopupWithConfirmation(confirmPopupSelector);
+popupConfirm.setEventListeners();
 
 const popupEditProfile = new PopupWithForm({
   popupSelector: profilePopupSelector,
@@ -64,6 +69,14 @@ function createCardElement(cardData) {
     data: cardData,
     handleCardClick: (data) => {
       popupImage.open(data);
+    },
+    handleTrashIconClick: () => {
+      popupConfirm.open({
+        handleFormSubmit: () => {
+          card.removeCardElement();
+          popupConfirm.close();
+        }
+      });
     }
   }, cardTemplateSelector);
 
