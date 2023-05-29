@@ -67,6 +67,25 @@ class Api {
     .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
     .catch(err => console.log(err));
   }
+
+  handleLikeCard(cardId, method) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method,
+      headers: {
+        authorization: this._token,
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 }
 
 export const api = new Api({

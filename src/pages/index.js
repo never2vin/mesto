@@ -81,6 +81,15 @@ function createCardElement(cardData) {
           });
         }
       });
+    },
+    handleLikeIconClick: (id, isLiked) => {
+      const method = isLiked
+        ? 'DELETE'
+        : 'PUT';
+
+      api.handleLikeCard(id, method).then(data => {
+        card.toggleLike(data.likes.length);
+      });
     }
   }, cardTemplateSelector);
 

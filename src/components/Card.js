@@ -1,10 +1,11 @@
 export default class Card {
-  constructor({ data, currentUserId, handleCardClick, handleTrashIconClick }, templateSelector) {
+  constructor({data, currentUserId, handleCardClick, handleTrashIconClick, handleLikeIconClick}, templateSelector) {
     this._data = data;
     this._currentUserId = currentUserId;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
     this._handleTrashIconClick = handleTrashIconClick;
+    this._handleLikeIconClick = handleLikeIconClick;
   }
 
   _getTemplate() {
@@ -19,11 +20,12 @@ export default class Card {
 
   _setEventListeners() {
     this._imageElement.addEventListener('click', () => this._handleCardClick(this._data));
-    this._likeIconElement.addEventListener('click', this._toggleLikeIconActivity);
-    this._cardElement.querySelector('.element__trash-icon').addEventListener('click', this._handleTrashIconClick);
+    this._likeIconElement.addEventListener('click', () => {
+      this._handleLikeIconClick(this._data._id, this._likeIconElement.classList.contains('element__like-icon_active'));
+    });
   }
 
-  _toggleLikeIconActivity = () => {
+  _toggleLikeIconActivity() {
     this._likeIconElement.classList.toggle('element__like-icon_active');
   }
 
@@ -31,7 +33,12 @@ export default class Card {
     return this._data._id;
   }
 
-  removeCardElement = () => {
+  toggleLike(Count) {
+    this._toggleLikeIconActivity();
+    this._likeCountElement.textContent = Count;
+  }
+
+  removeCardElement() {
     this._cardElement.remove();
     this._cardElement = null;
   }
@@ -50,6 +57,10 @@ export default class Card {
     this._likeCountElement = this._cardElement.querySelector('.element__like-count');
 
     if (this._data.likes.length > 0) {
+      if (this._data.likes.some(user => user._id === this._currentUserId)) {
+        this._toggleLikeIconActivity();
+      }
+
       this._likeCountElement.textContent = this._data.likes.length;
     }
 
