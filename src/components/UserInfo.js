@@ -11,8 +11,13 @@ export default class UserInfo{
     }
   }
 
-  setUserInfo({name, about}) {
+  getId() {
+    return this._id;
+  }
+
+  setUserInfo({name, about, _id}) {
     this._userNameElement.textContent = name;
     this._userJobElement.textContent = about;
+    this._id = _id;
   }
 }

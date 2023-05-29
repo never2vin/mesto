@@ -1,6 +1,7 @@
 export default class Card {
-  constructor({ data, handleCardClick, handleTrashIconClick }, templateSelector) {
+  constructor({ data, currentUserId, handleCardClick, handleTrashIconClick }, templateSelector) {
     this._data = data;
+    this._currentUserId = currentUserId;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
     this._handleTrashIconClick = handleTrashIconClick;
@@ -26,6 +27,10 @@ export default class Card {
     this._likeIconElement.classList.toggle('element__like-icon_active');
   }
 
+  getId() {
+    return this._data._id;
+  }
+
   removeCardElement = () => {
     this._cardElement.remove();
     this._cardElement = null;
@@ -46,6 +51,13 @@ export default class Card {
 
     if (this._data.likes.length > 0) {
       this._likeCountElement.textContent = this._data.likes.length;
+    }
+
+    this._trashIconElement = this._cardElement.querySelector('.element__trash-icon');
+
+    if (this._data.owner._id === this._currentUserId) {
+      this._trashIconElement.classList.add('element__trash-icon_visible');
+      this._trashIconElement.addEventListener('click', this._handleTrashIconClick);
     }
 
     this._setEventListeners();

@@ -4,10 +4,11 @@
   border: none;
   background: url(../../../images/element-trash.svg) no-repeat center;
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 19px;
+  right: 16px;
   opacity: 1;
   transition: opacity 0.5s;
+  visibility: hidden;
 }
 
 .element__trash-icon:hover {

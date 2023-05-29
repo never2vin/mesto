@@ -67,14 +67,18 @@ popupAddCard.setEventListeners();
 function createCardElement(cardData) {
   const card = new Card({
     data: cardData,
+    currentUserId: userInfo.getId(),
     handleCardClick: (data) => {
       popupImage.open(data);
     },
     handleTrashIconClick: () => {
       popupConfirm.open({
         handleFormSubmit: () => {
-          card.removeCardElement();
-          popupConfirm.close();
+          const id = card.getId();
+          api.removeCard(id).then(res => {
+            card.removeCardElement();
+            popupConfirm.close();
+          });
         }
       });
     }
