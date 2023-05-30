@@ -4,18 +4,12 @@ class Api {
     this._token = token;
   }
 
-  getUserInfo() {
-    return fetch(`${this._baseUrl}/users/me`, {
-      headers: {
-        authorization: this._token
-      }
-    })
-    .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
-    .catch(err => console.log(err));
+  getAllInitialData() {
+    return Promise.all([this.getUserInfo(), this.getCards()]);
   }
 
-  getInitialCards() {
-    return fetch(`${this._baseUrl}/cards`, {
+  getUserInfo() {
+    return fetch(`${this._baseUrl}/users/me`, {
       headers: {
         authorization: this._token
       }
@@ -38,6 +32,31 @@ class Api {
     })
       .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
       .catch(err => console.log(err));
+  }
+
+  updateUserAvatar({ link }) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: {
+        authorization: this._token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        avatar: link
+      })
+    })
+      .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
+      .catch(err => console.log(err));
+  }
+
+  getCards() {
+    return fetch(`${this._baseUrl}/cards`, {
+      headers: {
+        authorization: this._token
+      }
+    })
+    .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
+    .catch(err => console.log(err));
   }
 
   addCard({ name, link }) {
@@ -76,15 +95,8 @@ class Api {
         'Content-Type': 'application/json'
       }
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
+    .catch(err => console.log(err));
   }
 }
 

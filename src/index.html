@@ -13,11 +13,13 @@
 
     <main class="content page__content">
       <section class="profile content__profile">
-        <img
+        <div class="profile__avatar">
+          <img
           src="<%=require('./images/profile-cousteau.png')%>"
           alt="Фото профиля"
           class="profile__image"
         >
+        </div>
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
           <p class="profile__job">Исследователь океана</p>
@@ -33,10 +35,39 @@
           aria-label="Добавить"
         ></button>
       </section>
+
       <section aria-label="Карточки красивых мест">
         <ul class="elements page__list"></ul>
       </section>
     </main>
+
+    <div class="popup popup_type_update">
+      <div class="popup__container">
+        <button
+          type="button"
+          class="page__button popup__close-icon"
+          aria-label="Закрыть"
+        ></button>
+        <form class="popup__form" name="update-avatar" novalidate>
+          <h2 class="popup__heading">Обновить аватар</h2>
+          <input
+            type="url"
+            class="page__input popup__input popup__input_type_link"
+            id="avatar-link"
+            name="link"
+            placeholder="https://somewebsite.com/someimage.jpg"
+            required
+          >
+          <span
+            class="popup__input-error"
+            id="avatar-link-error"
+          ></span>
+          <button type="submit" class="page__button popup__submit">
+            Сохранить
+          </button>
+        </form>
+      </div>
+    </div>
 
     <div class="popup popup_type_edit">
       <div class="popup__container">

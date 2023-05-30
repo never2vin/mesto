@@ -1,14 +1,16 @@
 import "./index.css";
 
-import { initialCards,
+import {
   validationConfig,
   popupFormSelector,
+  avatarPopupSelector,
   profilePopupSelector,
   cardPopupSelector,
   imagePopupSelector,
   confirmPopupSelector,
   cardListSelector,
   cardTemplateSelector,
+  userAvatarSelector,
   userNameSelector,
   userAboutSelector
 } from "../utils/constants.js";
@@ -24,12 +26,13 @@ import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 import UserInfo from "../components/UserInfo.js";
 
 const profileElement = document.querySelector('.profile');
+const profileAvatarElement = profileElement.querySelector('.profile__avatar');
 const profileEditButtonElement = profileElement.querySelector('.profile__edit-button');
 const profileAddButtonElement = profileElement.querySelector('.profile__add-button');
 
+const formUpdateAvatarElement = document.querySelector(avatarPopupSelector).querySelector(popupFormSelector);
 const formEditProfileElement = document.querySelector(profilePopupSelector).querySelector(popupFormSelector);
 const formAddCardElement = document.querySelector(cardPopupSelector).querySelector(popupFormSelector);
-
 
 const popupImage = new PopupWithImage(imagePopupSelector);
 popupImage.setEventListeners();
@@ -39,7 +42,7 @@ popupConfirm.setEventListeners();
 
 const popupEditProfile = new PopupWithForm({
   popupSelector: profilePopupSelector,
-  handleFormSubmit: (data) => {
+  handleFormSubmit: (data) => {// name: ..., about: ...
     api.updateUserInfo(data).then(res => {
       userInfo.setUserInfo(res);
 
@@ -50,9 +53,22 @@ const popupEditProfile = new PopupWithForm({
 
 popupEditProfile.setEventListeners();
 
+const popupUpdateAvatar = new PopupWithForm({
+  popupSelector: avatarPopupSelector,
+  handleFormSubmit: (data) => {// link: ссылка на картинку
+    api.updateUserAvatar(data).then(res => {
+      userInfo.setUserInfo(res);
+
+      popupUpdateAvatar.close()
+    });
+  }
+});
+
+popupUpdateAvatar.setEventListeners();
+
 const popupAddCard = new PopupWithForm({
   popupSelector: cardPopupSelector,
-  handleFormSubmit: (data) => {
+  handleFormSubmit: (data) => { // name: ..., link: ...
     api.addCard(data).then(res => {
       const cardElement = createCardElement(res);
       cardList.addItem(cardElement);
@@ -87,7 +103,7 @@ function createCardElement(cardData) {
         ? 'DELETE'
         : 'PUT';
 
-      api.handleLikeCard(id, method).then(data => {
+      api.handleLikeCard(id, method).then(data => {// ..., likes: ...
         card.toggleLike(data.likes.length);
       });
     }
@@ -103,23 +119,29 @@ const cardList = new Section({
   }
 }, cardListSelector);
 
-const userInfo = new UserInfo(userNameSelector, userAboutSelector);
+const userInfo = new UserInfo(userAvatarSelector, userNameSelector, userAboutSelector);
 
-//
-api.getUserInfo().then(data => {
-  userInfo.setUserInfo(data);
+api.getAllInitialData().then(data => {// [user, cards]
+  const [userData, cards] = data;
+
+  userInfo.setUserInfo(userData);
+  cardList.renderItems(cards.reverse());
 });
 
-//
-api.getInitialCards().then(items => {
-  cardList.renderItems(items);
-});
-
+const avatarFormValidator = new FormValidator(validationConfig, formUpdateAvatarElement);
 const profileFormValidator = new FormValidator(validationConfig, formEditProfileElement);
 const cardFormValidator = new FormValidator(validationConfig, formAddCardElement);
 
+avatarFormValidator.enableValidation();
 profileFormValidator.enableValidation();
 cardFormValidator.enableValidation();
+
+profileAvatarElement.addEventListener('click', () => {
+  formUpdateAvatarElement.reset();
+  avatarFormValidator.resetValidation();
+
+  popupUpdateAvatar.open();;
+});
 
 profileEditButtonElement.addEventListener('click', () => {
   const {name, about} = userInfo.getUserInfo();
