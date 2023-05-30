@@ -43,10 +43,8 @@ popupConfirm.setEventListeners();
 const popupEditProfile = new PopupWithForm({
   popupSelector: profilePopupSelector,
   handleFormSubmit: (data) => {// name: ..., about: ...
-    api.updateUserInfo(data).then(res => {
+    return api.updateUserInfo(data).then(res => {
       userInfo.setUserInfo(res);
-
-      popupEditProfile.close();
     });
   }
 });
@@ -56,10 +54,8 @@ popupEditProfile.setEventListeners();
 const popupUpdateAvatar = new PopupWithForm({
   popupSelector: avatarPopupSelector,
   handleFormSubmit: (data) => {// link: ссылка на картинку
-    api.updateUserAvatar(data).then(res => {
+    return api.updateUserAvatar(data).then(res => {
       userInfo.setUserInfo(res);
-
-      popupUpdateAvatar.close()
     });
   }
 });
@@ -69,11 +65,9 @@ popupUpdateAvatar.setEventListeners();
 const popupAddCard = new PopupWithForm({
   popupSelector: cardPopupSelector,
   handleFormSubmit: (data) => { // name: ..., link: ...
-    api.addCard(data).then(res => {
+    return api.addCard(data).then(res => {
       const cardElement = createCardElement(res);
       cardList.addItem(cardElement);
-
-      popupAddCard.close()
     });
   }
 });
