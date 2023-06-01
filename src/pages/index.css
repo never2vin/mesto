@@ -62,6 +62,7 @@
 
 @import url(../blocks/popup/_type/popup_type_image.css);
 @import url(../blocks/popup/_type/popup_type_confirm.css);
+@import url(../blocks/popup/_type/popup_type_update.css);
 
 @import url(../blocks/popup/__content/popup__content.css);
 @import url(../blocks/popup/__image/popup__image.css);
