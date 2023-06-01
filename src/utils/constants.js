@@ -21,3 +21,5 @@ export const popupFormSelector = '.popup__form';
 export const userAvatarSelector = '.profile__image';
 export const userNameSelector = '.profile__name';
 export const userAboutSelector = '.profile__job';
+
+export const loadingText = 'Сохранение...';
