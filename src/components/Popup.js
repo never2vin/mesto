@@ -19,7 +19,7 @@ export default class Popup {
   }
 
   setEventListeners() {
-    this._popup.addEventListener('click', this._closePopupByClickOverlay);
+    this._popup.addEventListener('mousedown', this._closePopupByClickOverlay);
     this._popupCloseIcon.addEventListener('click', this.close);
   }
 
