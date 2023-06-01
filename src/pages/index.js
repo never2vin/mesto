@@ -13,6 +13,7 @@ import {
   userAvatarSelector,
   userNameSelector,
   userAboutSelector,
+  spinnerSelector,
   loadingText
 } from "../utils/constants.js";
 
@@ -34,6 +35,8 @@ const profileAddButtonElement = profileElement.querySelector('.profile__add-butt
 const formUpdateAvatarElement = document.querySelector(avatarPopupSelector).querySelector(popupFormSelector);
 const formEditProfileElement = document.querySelector(profilePopupSelector).querySelector(popupFormSelector);
 const formAddCardElement = document.querySelector(cardPopupSelector).querySelector(popupFormSelector);
+
+const spinnerElement = document.querySelector(spinnerSelector);
 
 const popupImage = new PopupWithImage(imagePopupSelector);
 popupImage.setEventListeners();
@@ -138,13 +141,27 @@ const cardList = new Section({
 
 const userInfo = new UserInfo(userAvatarSelector, userNameSelector, userAboutSelector);
 
+function renderLoading(isLoading) {
+  if (isLoading) {
+    spinnerElement.classList.add('spinner_visible');
+    profileElement.classList.add('profile_hidden');
+  }
+  else {
+    spinnerElement.classList.remove('spinner_visible');
+    profileElement.classList.remove('profile_hidden');
+  }
+}
+
+renderLoading(true);
+
 api.getAllInitialData().then(data => {// [user, cards]
   const [userData, cards] = data;
 
   userInfo.setUserInfo(userData);
   cardList.renderItems(cards.reverse());
 })
-.catch((err) => console.error(err, ', при получении информации о пользователе и карточках.'));
+  .catch((err) => console.error(err, ', при получении информации о пользователе и карточках.'))
+  .finally(() => renderLoading(false));
 
 const avatarFormValidator = new FormValidator(validationConfig, formUpdateAvatarElement);
 const profileFormValidator = new FormValidator(validationConfig, formEditProfileElement);

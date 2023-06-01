@@ -22,4 +22,6 @@ export const userAvatarSelector = '.profile__image';
 export const userNameSelector = '.profile__name';
 export const userAboutSelector = '.profile__job';
 
+export const spinnerSelector = '.content__spinner';
+
 export const loadingText = 'Сохранение...';
